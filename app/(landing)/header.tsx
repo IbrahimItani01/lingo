@@ -14,8 +14,8 @@ export const Header = ()=>{
                     <Loader className="h-5 w-5 text-muted-foreground animate-spin"></Loader>
                 </ClerkLoading>
                 <ClerkLoaded>
-                   <SignedIn>
-                        <UserButton/>
+                   <SignedIn >
+                        <UserButton appearance={{elements:{avatarBox:"h-10 w-10"}}}/>
                    </SignedIn>
                    <SignedOut>
                     <SignInButton mode="modal" forceRedirectUrl="/learn" signUpForceRedirectUrl="/learn">
