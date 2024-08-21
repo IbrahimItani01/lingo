@@ -7,8 +7,8 @@ const ButtonsPage = ()=>{
             <Button variant="primary">Primary</Button>
             <Button variant="primaryOutline">Primary Outline</Button>
 
-            <Button variant="primary">Secondary</Button>
-            <Button variant="primaryOutline">Secondary Outline</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="secondaryOutline">Secondary Outline</Button>
         </div>
 
     );
