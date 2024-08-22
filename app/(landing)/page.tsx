@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, SignUpButton, SignInButton } from "@clerk/nextjs";
 import { Loader } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 export default function Home() {
   return(
     <div className="max-w-[988px] mx-auto flex-1 w-full flex flex-wrap flex-col lg:flex-row items-center justify-center p-4 gap-2">
@@ -28,7 +29,11 @@ export default function Home() {
           </SignInButton>
         </SignedOut>
         <SignedIn>
-
+          <Button size="lg" variant="secondary" className="w-full" asChild>
+            <Link href="/learn">
+              Continue Learning
+            </Link>
+          </Button>
         </SignedIn>
       </ClerkLoaded>
         </div>
