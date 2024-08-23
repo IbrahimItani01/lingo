@@ -19,6 +19,9 @@ export const Sidebar= ({className}:Props)=>{
             </Link>
             <div className="flex flex-col gap-y-2 flex-1">
                 <SidebarItem iconSrc="/learn.png"  label="learn" href="/learn"></SidebarItem>
+                <SidebarItem iconSrc="/leaderboard.png"  label="leaderboard" href="/leaderboard"></SidebarItem>
+                <SidebarItem iconSrc="/quests.png"  label="quests" href="/quests"></SidebarItem>
+                <SidebarItem iconSrc="/shop.png"  label="shop" href="/shop"></SidebarItem>
             </div>
         </div>
             
