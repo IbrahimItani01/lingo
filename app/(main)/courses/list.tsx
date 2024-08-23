@@ -1,7 +1,7 @@
 "use client";
 
 import { courses } from "@/db/schema";
-
+import { Card } from "./card";
 type Props = {
     courses:typeof courses.$inferInsert[];
     activeCourseId: number;
