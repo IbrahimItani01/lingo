@@ -12,7 +12,6 @@ const CoursesPage = async ()=>{
                 courses = {courses}
                 activeCourseId={1}
             />
-            {JSON.stringify(courses)}
         </div>
     );
 }
