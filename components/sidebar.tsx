@@ -2,6 +2,9 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { SidebarItem } from "./sidebarItem";
+import { ClerkLoaded, ClerkLoading, SignOutButton, UserButton } from "@clerk/nextjs";
+import { Loader } from "lucide-react";
+
 type Props ={
     className?:string;
 }
@@ -22,6 +25,14 @@ export const Sidebar= ({className}:Props)=>{
                 <SidebarItem iconSrc="/leaderboard.png"  label="leaderboard" href="/leaderboard"></SidebarItem>
                 <SidebarItem iconSrc="/quests.png"  label="quests" href="/quests"></SidebarItem>
                 <SidebarItem iconSrc="/shop.png"  label="shop" href="/shop"></SidebarItem>
+            </div>
+            <div className="p-4">
+                <ClerkLoading>
+                    <Loader className="h-5 w-5 text-muted-foreground animate-spin"></Loader>
+                </ClerkLoading>
+                <ClerkLoaded>
+                    <SignOutButton redirectUrl="/"></SignOutButton>
+                </ClerkLoaded>
             </div>
         </div>
             
