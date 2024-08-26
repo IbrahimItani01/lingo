@@ -10,7 +10,34 @@ const main = async ()=>{
         console.log("Seeding database");
         await db.delete(schema.courses);
         await db.delete(schema.userProgress);
+        await db.insert(schema.courses).values([
+            {
+                id: 1,
+                title: "Spanish",
+                imageSrc: "/es.png"
+            },
+            {
+                id: 2,
+                title: "German",
+                imageSrc: "/de.png"
+            },
+            {
+                id: 3,
+                title: "English",
+                imageSrc: "/en.png"
+            },
+            {
+                id: 4,
+                title: "French",
+                imageSrc: "/fr.png"
+            },
+            {
+                id: 5,
+                title: "Italian",
+                imageSrc: "/it.png"
+            },
 
+        ])
         console.log("Seeding Finished");
     }
     catch (error){
