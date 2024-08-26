@@ -1,3 +1,4 @@
+import { Description } from "@radix-ui/react-dialog";
 import { relations } from "drizzle-orm";
 import { integer, pgTable,serial,text } from "drizzle-orm/pg-core";
 // First table for courses
@@ -6,6 +7,14 @@ export const courses = pgTable("courses",{
     title: text("title").notNull(),
     imageSrc: text("image_src").notNull(),
 });
+export const units = pgTable("units",{
+    id: serial("id").primaryKey(),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    courseId: integer("course_id").references(()=>courses.id,{onDelete:"cascade"}).notNull(),
+    order: integer("order").notNull(),
+})
+
 export const coursesRelations = relations(courses,({many})=>({
     userProgress: many(userProgress)
 }))
