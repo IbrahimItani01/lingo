@@ -51,6 +51,7 @@ export const challengesRelations = relations(challenges,({one,many})=>({
         fields: [challenges.lessonId],
         references:[lessons.id],
     }),
+    challengeOptions: many(challengeOptions),
 }));
 export const challengeOptions = pgTable("challengeOptions",{
     id: serial("id").primaryKey(),
@@ -60,6 +61,12 @@ export const challengeOptions = pgTable("challengeOptions",{
     imageSrc: text("image_src"),
     audioSrc: text("audio_src"),
 });
+export const challengeOptionsRelations = relations(challengeOptions,({one})=>({
+    challenge: one(challenges,{
+        fields: [challengeOptions.challengeId],
+        references:[challenges.id],
+    }),
+}));
 export const userProgress = pgTable("user_progress",{
     userId: text("user_id").primaryKey(),
     userName: text("user_name").notNull().default("User"),
