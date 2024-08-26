@@ -1,6 +1,6 @@
 import { Description } from "@radix-ui/react-dialog";
 import { relations } from "drizzle-orm";
-import { integer, pgTable,serial,text } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable,serial,text } from "drizzle-orm/pg-core";
 // First table for courses
 export const courses = pgTable("courses",{
     id: serial("id").primaryKey(),
@@ -35,13 +35,24 @@ export const lessonsRelations = relations(lessons,({one,many})=>({
     unit: one(units,{
         fields: [lessons.unitId],
         references:[units.id],
-    })
+    }),
+    challenges: many(challenges),
 }))
+export const challengesEnum = pgEnum("type",["SELECT","ASSIST"])
 export const challenges = pgTable("challenges",{
     id: serial("id").primaryKey(),
     lessonId: integer("lesson_id").references(()=>lessons.id,{onDelete:'cascade'}).notNull(),
-    
+    type: challengesEnum('type').notNull(),
+    question: text("question").notNull(),
+    order: integer("order").notNull(),
 });
+export const challengesRelations = relations(challenges,({one,many})=>({
+    lesson: one(lessons,{
+        fields: [challenges.lessonId],
+        references:[lessons.id],
+    }),
+}));
+
 export const userProgress = pgTable("user_progress",{
     userId: text("user_id").primaryKey(),
     userName: text("user_name").notNull().default("User"),
