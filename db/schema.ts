@@ -1,6 +1,6 @@
 import { Description } from "@radix-ui/react-dialog";
 import { relations } from "drizzle-orm";
-import { integer, pgEnum, pgTable,serial,text } from "drizzle-orm/pg-core";
+import { boolean, integer, pgEnum, pgTable,serial,text } from "drizzle-orm/pg-core";
 // First table for courses
 export const courses = pgTable("courses",{
     id: serial("id").primaryKey(),
@@ -52,7 +52,14 @@ export const challengesRelations = relations(challenges,({one,many})=>({
         references:[lessons.id],
     }),
 }));
-
+export const challengeOptions = pgTable("challengeOptions",{
+    id: serial("id").primaryKey(),
+    challengeId: integer("challenge_id").references(()=>challenges.id,{onDelete:'cascade'}).notNull(),
+    text: text("text").notNull(),
+    correct: boolean("correct").notNull(),
+    imageSrc: text("image_src"),
+    audioSrc: text("audio_src"),
+});
 export const userProgress = pgTable("user_progress",{
     userId: text("user_id").primaryKey(),
     userName: text("user_name").notNull().default("User"),
