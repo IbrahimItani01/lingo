@@ -33,7 +33,7 @@ export const Unit = ({id,order,title,description,lessons,activeLesson,activeLess
                         index={index}
                         totalCount={lessons.length - 1}
                         locked={isLocked}
-                        current={isCurrent}
+                        current={true || isCurrent} //TODO: remove hardcoded true
                         percentage={activeLessonPercentage}
                         />
                     );
