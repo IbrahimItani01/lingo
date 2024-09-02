@@ -25,7 +25,7 @@ export const Unit = ({id,order,title,description,lessons,activeLesson,activeLess
             <div className="flex items-center flex-col relative">
                 {lessons.map((lesson,index)=>{
                     //TODO: remove hardcoded true
-                    const isCurrent = true || lesson.id === activeLesson?.id;
+                    const isCurrent = lesson.id === activeLesson?.id;
                     const isLocked = lesson.completed && !isCurrent;
                     return(
                         <LessonButton
