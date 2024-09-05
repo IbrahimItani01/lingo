@@ -3,6 +3,7 @@ import db from "./drizzle";
 import { auth } from "@clerk/nextjs/server";
 import { userProgress, courses, units, challengeOptions, challengeProgress, lessons } from "./schema";
 import {eq} from "drizzle-orm";
+import { AwsDataApiPgDatabase } from "drizzle-orm/aws-data-api/pg";
 export const getUserProgress = cache(async ()=>{
     const {userId} = await auth();
     if(!userId) 
@@ -149,5 +150,21 @@ export const getLesson = cache(async (id?:number)=>{
     return{
         ...data,challenges: normalizeChallenges
     }
+});
+
+export const getLessonPercentage = cache(async ()=>{
+    const courseProgress = await getCourseProgress();
+    if (!courseProgress?.activeLessonId){
+        return 0;
+    }
+    const lesson = await getLesson(courseProgress.activeLessonId);
+    if(!lesson){
+        return 0;
+    }
+    const completedChallenges = lesson.challenges.filter((challenge)=>challenge.completed);
+    const percentage = Math.round(
+        (completedChallenges.length / lesson.challenges.length) *100,
+    )
+    return percentage;
 })
 
