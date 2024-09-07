@@ -1,9 +1,9 @@
 "use client";
 
 import { challengeOptions, challenges } from "@/db/schema";
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import { Header } from "./header";
-import { unstable_getStaticPaths } from "next/dist/build/templates/pages";
+import { QuestionBubble } from "./questionBubble";
 type Props ={
     initialPercentage: number;
     initialHearts: number;
@@ -38,7 +38,10 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                             {title}
                         </h1>
                         <div>
-                             {/*TODO: Challengge component  */}
+                             {/*TODO: Change back to type assist  */}
+                             {challenge.type==="SELECT" && (
+                                <QuestionBubble question={challenge.question}/>
+                             )}
                         </div>
                     </div>
                 </div>
