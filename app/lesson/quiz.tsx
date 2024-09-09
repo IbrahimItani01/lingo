@@ -38,6 +38,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
 
     const [pending,startTransition] = useTransition();
     const [hearts,setHearts]= useState(initialHearts);
+    const [lessonId] = useState(initialLessonId);
     const [percentage,setPercentage]=useState(initialPercentage);
     const [challenges] = useState(initialLessonChallenges);
     const [activeIndex,setActiveIndex] = useState(()=>{
@@ -148,6 +149,11 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                         />
                     </div>
                 </div>
+                <Footer
+                    lessonId={lessonId}
+                    status="completed"
+                    onCheck={()=>{}}
+                />
             </>
         )
     }
