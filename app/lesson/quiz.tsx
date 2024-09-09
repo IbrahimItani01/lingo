@@ -39,7 +39,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
     const [percentage,setPercentage]=useState(initialPercentage);
     const [challenges] = useState(initialLessonChallenges);
     const [activeIndex,setActiveIndex] = useState(()=>{
-        const unCompletedIndex = challenges.findIndex((challenge)=>!challenge?.completed);
+        const unCompletedIndex = challenges.findIndex((challenge)=>!challenge.completed);
         return unCompletedIndex===-1? 0:unCompletedIndex;
     });
     const [selectedOption,setSelectedOption] = useState<number>();
@@ -76,7 +76,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
 
         if(correctOption && correctOption.id === selectedOption){
             startTransition(()=>{
-                upsertChallengeProgress(challenge?.id)
+                upsertChallengeProgress(challenge.id)
                 .then((response)=>{
                     if(response?.error === 'hearts'){
                         console.error("Missing hearts");
@@ -94,14 +94,14 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
             })
         }else{
             startTransition(()=>{
-                reduceHearts(challenge?.id)
+                reduceHearts(challenge.id)
                 .then((response)=>{
                     if(response?.error==="hearts")
                     {
                         console.error("Missing Hearts");
                         return;
                     }
-                    incorrectControls.play();
+                    incorrectControls.play()
                     setStatus("wrong");
                     if(!response?.error){
                         setHearts((prev)=> Math.max(prev-1,0));
@@ -112,8 +112,14 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
         }
 
     };
-
-    const title = challenge?.type === "ASSIST"? "Select the correct Meaning": challenge?.question;
+    if(!challenge){
+        return(
+            <div>
+                Finished the challenge
+            </div>
+        )
+    }
+    const title = challenge.type === "ASSIST"? "Select the correct Meaning": challenge.question;
     return(
         <>
         {incorrectAudio}
@@ -130,7 +136,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                             {title}
                         </h1>
                         <div>
-                             {challenge?.type==="ASSIST" && (
+                             {challenge.type==="ASSIST" && (
                                 <QuestionBubble question={challenge.question}/>
                              )}
                              <Challenge
@@ -139,7 +145,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                                 status = {status}
                                 selectedOption ={selectedOption}
                                 disabled={pending}
-                                type= {challenge?.type}
+                                type= {challenge.type}
                              />
                         </div>
                     </div>

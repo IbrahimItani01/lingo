@@ -43,7 +43,7 @@ const main = async ()=>{
                 imageSrc: "/it.png"
             },
 
-        ])
+        ]);
         await db.insert(schema.units).values([
             {
                 id: 1,
@@ -52,7 +52,7 @@ const main = async ()=>{
                 description: "Learn Basics of Spanish",
                 order:1,
             },
-        ])
+        ]);
         await db.insert(schema.lessons).values([
             {
                 id: 1,
@@ -108,6 +108,7 @@ const main = async ()=>{
                 question: 'Which one of these is the "the robot"?',
             },
         ]);
+      
         await db.insert(schema.challengeOptions).values([
             {
                 challengeId: 1,
@@ -130,7 +131,7 @@ const main = async ()=>{
                 text: "el robot",
                 audioSrc: "/es_robot.mp3",
             },
-        ])
+        ]);
 
         await db.insert(schema.challengeOptions).values([
             {
@@ -151,7 +152,7 @@ const main = async ()=>{
                 text: "el robot",
                 audioSrc: "/es_robot.mp3",
             },
-        ])
+        ]);
         await db.insert(schema.challengeOptions).values([
             {
                 challengeId: 3,
@@ -174,7 +175,30 @@ const main = async ()=>{
                 text: "el robot",
                 audioSrc: "/es_robot.mp3",
             },
-        ])
+        ]);
+        await db.insert(schema.challenges).values([
+            {
+              id: 4,
+              lessonId: 2,
+              type: "SELECT",
+              order: 1,
+              question: 'Which one of these is the "the man"?',
+            },
+            {
+                id: 5,
+                lessonId: 2,
+                type: "ASSIST",
+                order: 2,
+                question: '"the man"',
+            },
+            {
+                id: 6,
+                lessonId: 2,
+                type: "SELECT",
+                order: 3,
+                question: 'Which one of these is the "the robot"?',
+            },
+        ]);
         console.log("Seeding Finished");
     }
     catch (error){
