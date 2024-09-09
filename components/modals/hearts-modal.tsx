@@ -46,9 +46,9 @@ export const HeartsModal = ()=>{
                         <Button variant="primary" 
                             className="w-full"
                             size="lg"
-                            onClick={onclick}
+                            onClick={onClick}
                         >
-                            Become Pro User
+                            Get unlimited hearts
                         </Button>
                         <Button variant="primaryOutline" 
                             className="w-full"
