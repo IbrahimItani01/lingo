@@ -9,6 +9,7 @@ import { Footer } from "./footer";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { toast } from "sonner";
 import { reduceHearts } from "@/actions/user-progress";
+import { useAudio } from "react-use";
 type Props ={
     initialPercentage: number;
     initialHearts: number;
@@ -20,14 +21,25 @@ type Props ={
     userSubscription: any;
 }
 export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,initialPercentage,userSubscription}: Props)=>{
-    const [pending,startTransition] = useTransition();
 
-    
+    const [
+        correctAudio,
+        _c,
+        correctControls
+    ]= useAudio({src:"/correct.wav"})
+
+    const [
+        incorrectAudio,
+        _inc,
+        incorrectControls
+    ]= useAudio({src:"/incorrect.wav"})
+
+    const [pending,startTransition] = useTransition();
     const [hearts,setHearts]= useState(initialHearts);
     const [percentage,setPercentage]=useState(initialPercentage);
     const [challenges] = useState(initialLessonChallenges);
     const [activeIndex,setActiveIndex] = useState(()=>{
-        const unCompletedIndex = challenges.findIndex((challenge)=>!challenge.completed);
+        const unCompletedIndex = challenges.findIndex((challenge)=>!challenge?.completed);
         return unCompletedIndex===-1? 0:unCompletedIndex;
     });
     const [selectedOption,setSelectedOption] = useState<number>();
@@ -64,12 +76,13 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
 
         if(correctOption && correctOption.id === selectedOption){
             startTransition(()=>{
-                upsertChallengeProgress(challenge.id)
+                upsertChallengeProgress(challenge?.id)
                 .then((response)=>{
                     if(response?.error === 'hearts'){
                         console.error("Missing hearts");
                         return;
                     }
+                    correctControls.play();
                     setStatus("correct");
                     setPercentage((prev)=>prev+100/challenges.length);
 
@@ -81,13 +94,14 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
             })
         }else{
             startTransition(()=>{
-                reduceHearts(challenge.id)
+                reduceHearts(challenge?.id)
                 .then((response)=>{
                     if(response?.error==="hearts")
                     {
                         console.error("Missing Hearts");
                         return;
                     }
+                    incorrectControls.play();
                     setStatus("wrong");
                     if(!response?.error){
                         setHearts((prev)=> Math.max(prev-1,0));
@@ -102,6 +116,8 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
     const title = challenge?.type === "ASSIST"? "Select the correct Meaning": challenge?.question;
     return(
         <>
+        {incorrectAudio}
+        {correctAudio}
             <Header
             hearts={hearts}
             percentage={percentage}
@@ -123,7 +139,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                                 status = {status}
                                 selectedOption ={selectedOption}
                                 disabled={pending}
-                                type= {challenge.type}
+                                type= {challenge?.type}
                              />
                         </div>
                     </div>

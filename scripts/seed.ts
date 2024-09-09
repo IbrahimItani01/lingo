@@ -142,7 +142,7 @@ const main = async ()=>{
             {
                 challengeId: 2,
                 correct: false,
-                text: "el mujer",
+                text: "la mujer",
                 audioSrc: "/es_woman.mp3",
             },
             {
@@ -164,7 +164,7 @@ const main = async ()=>{
                 challengeId: 3,
                 imageSrc: "/woman.png",
                 correct: false,
-                text: "el mujer",
+                text: "la mujer",
                 audioSrc: "/es_woman.mp3",
             },
             {
