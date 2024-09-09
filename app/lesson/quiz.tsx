@@ -9,9 +9,11 @@ import { Footer } from "./footer";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { toast } from "sonner";
 import { reduceHearts } from "@/actions/user-progress";
-import { useAudio } from "react-use";
+import { useAudio ,useWindowSize} from "react-use";
 import Image from "next/image";
 import { ResultCard } from "./resultCard";
+import { useRouter } from "next/navigation";
+import Confetti from "react-confetti";
 type Props ={
     initialPercentage: number;
     initialHearts: number;
@@ -23,7 +25,8 @@ type Props ={
     userSubscription: any;
 }
 export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,initialPercentage,userSubscription}: Props)=>{
-
+    const { width, height } = useWindowSize();
+    const router = useRouter();
     const [
         correctAudio,
         _c,
@@ -35,6 +38,9 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
         _inc,
         incorrectControls
     ]= useAudio({src:"/incorrect.wav"})
+    const [
+        finishAudio,
+    ]= useAudio({src:"/finish.mp3",autoPlay:true});
 
     const [pending,startTransition] = useTransition();
     const [hearts,setHearts]= useState(initialHearts);
@@ -115,9 +121,17 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
         }
 
     };
-    if(true || !challenge){
+    if(!challenge){
         return(
             <>
+                {finishAudio}
+                <Confetti
+                    recycle={false}
+                    numberOfPieces={500}
+                    tweenDuration={10000}
+                    width={width}
+                    height={height}
+                />
                 <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center justify-center h-full">
                     <Image
                         src="/finish.png"
@@ -152,7 +166,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                 <Footer
                     lessonId={lessonId}
                     status="completed"
-                    onCheck={()=>{}}
+                    onCheck={()=> router.push("/learn")}
                 />
             </>
         )
