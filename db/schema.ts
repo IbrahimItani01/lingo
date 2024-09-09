@@ -1,4 +1,3 @@
-import { Description } from "@radix-ui/react-dialog";
 import { relations } from "drizzle-orm";
 import { boolean, integer, pgEnum, pgTable,serial,text } from "drizzle-orm/pg-core";
 // First table for courses

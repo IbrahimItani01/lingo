@@ -120,7 +120,7 @@ const main = async ()=>{
                 challengeId: 1,
                 imageSrc: "/woman.png",
                 correct: false,
-                text: "el mujer",
+                text: "la mujer",
                 audioSrc: "/es_woman.mp3",
             },
             {
@@ -179,7 +179,7 @@ const main = async ()=>{
     }
     catch (error){
         console.error(error);
-        throw new Error("Failed to see the database");
+        throw new Error("Failed to seed the database");
     }
 }   
 main();

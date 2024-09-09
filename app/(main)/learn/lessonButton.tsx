@@ -1,21 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { Check, Crown, Star } from "lucide-react";
+import { CheckCheck , Crown, Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-;
+
 
 type Props = {
   id: number;
   index: number;
   totalCount: number;
-  locked: boolean;
-  current: boolean;
+  locked?: boolean;
+  current?: boolean;
   percentage: number;
 };
 
@@ -45,8 +45,16 @@ export const LessonButton = ({
   const isFirst = index === 0;
   const isLast = index === totalCount;
   const isCompleted = !current && !locked;
+  let Icon;
 
-  const Icon = isCompleted ? Check : isLast ? Crown : Star;
+  if(isCompleted){
+    Icon = CheckCheck;
+  }else if(isLast){
+    Icon = Crown;
+  }
+  else{
+    Icon = Star;
+  }
 
   const href = isCompleted ? `/lesson/${id}` : "/lesson";
 
@@ -88,12 +96,10 @@ export const LessonButton = ({
                 <Icon
                   className={cn(
                     "h-10 w-10",
-                    locked
-                      ? "fill-neutral-400 text-neutral-400 stroke-neutral-400"
-                      : "fill-primary-foreground text-primary-foreground",
+                    locked? "fill-neutral-400 text-neutral-400 stroke-neutral-400": "fill-primary-foreground text-primary-foreground",
                     isCompleted && "fill-none stroke-[4]"
                   )}
-                ></Icon>
+                />
               </Button>
             </CircularProgressbarWithChildren>
           </div>
@@ -111,7 +117,7 @@ export const LessonButton = ({
                 : "fill-primary-foreground text-primary-foreground",
               isCompleted && "fill-none stroke-[4]"
             )}
-          ></Icon>
+          />
         </Button>
         )}
       </div>

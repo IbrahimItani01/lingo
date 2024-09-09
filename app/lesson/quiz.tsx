@@ -8,6 +8,7 @@ import { Challenge } from "./challenge";
 import { Footer } from "./footer";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { toast } from "sonner";
+import { reduceHearts } from "@/actions/user-progress";
 type Props ={
     initialPercentage: number;
     initialHearts: number;
@@ -79,12 +80,26 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                 
             })
         }else{
-            console.error("Incorrect option!");
+            startTransition(()=>{
+                reduceHearts(challenge.id)
+                .then((response)=>{
+                    if(response?.error==="hearts")
+                    {
+                        console.error("Missing Hearts");
+                        return;
+                    }
+                    setStatus("wrong");
+                    if(!response?.error){
+                        setHearts((prev)=> Math.max(prev-1,0));
+                    }
+                })
+                .catch(()=> toast.error("Something went wrong. Please try again."))
+            })
         }
 
     };
 
-    const title = challenge.type === "ASSIST"? "Select the correct Meaning": challenge.question;
+    const title = challenge?.type === "ASSIST"? "Select the correct Meaning": challenge?.question;
     return(
         <>
             <Header
@@ -99,7 +114,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                             {title}
                         </h1>
                         <div>
-                             {challenge.type==="ASSIST" && (
+                             {challenge?.type==="ASSIST" && (
                                 <QuestionBubble question={challenge.question}/>
                              )}
                              <Challenge
