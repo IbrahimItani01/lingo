@@ -9,12 +9,13 @@ import { Footer } from "./footer";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { toast } from "sonner";
 import { reduceHearts } from "@/actions/user-progress";
-import { useAudio ,useWindowSize} from "react-use";
+import { useAudio ,useWindowSize, useMount} from "react-use";
 import Image from "next/image";
 import { ResultCard } from "./resultCard";
 import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
 import { useHeartsModal } from "@/store/use-hearts-modal";
+import { usePracticeModal } from "@/store/use-practice-modal";
 type Props ={
     initialPercentage: number;
     initialHearts: number;
@@ -28,7 +29,12 @@ type Props ={
 export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,initialPercentage,userSubscription}: Props)=>{
    
     const {open: openHeartsModel} = useHeartsModal();
-   
+    const {open: openPracticeModal} = usePracticeModal();
+    useMount(()=>{
+        if(initialPercentage === 100){
+            openPracticeModal();
+        }
+    })
     const { width, height } = useWindowSize();
     const router = useRouter();
     const [
@@ -49,7 +55,9 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
     const [pending,startTransition] = useTransition();
     const [hearts,setHearts]= useState(initialHearts);
     const [lessonId] = useState(initialLessonId);
-    const [percentage,setPercentage]=useState(initialPercentage);
+    const [percentage,setPercentage]=useState(()=>{
+        return initialPercentage === 100? 0:initialPercentage;
+    });
     const [challenges] = useState(initialLessonChallenges);
     const [activeIndex,setActiveIndex] = useState(()=>{
         const unCompletedIndex = challenges.findIndex((challenge)=>!challenge.completed);
@@ -85,7 +93,6 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
         const correctOption = options.find((option)=>option.correct);
 
         if(!correctOption) return;
-        
 
         if(correctOption && correctOption.id === selectedOption){
             startTransition(()=>{
@@ -105,6 +112,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                 }).catch(()=>toast.error("Something went wrong. Please try again."))
                 
             })
+
         }else{
             startTransition(()=>{
                 reduceHearts(challenge.id)
@@ -123,8 +131,8 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
                 .catch(()=> toast.error("Something went wrong. Please try again."))
             })
         }
-
     };
+
     if(!challenge){
         return(
             <>
@@ -175,6 +183,7 @@ export const Quiz = ({initialHearts,initialLessonChallenges,initialLessonId,init
             </>
         )
     }
+    
     const title = challenge.type === "ASSIST"? "Select the correct Meaning": challenge.question;
     return(
         <>
