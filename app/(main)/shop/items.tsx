@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useTransition } from "react";
 const pointsToRefill = 10;
 type Props = {
     hearts: number;
@@ -12,6 +13,16 @@ type Props = {
 export const Items = ({hearts,points,hasActiveSubscription}:Props)=>
 {
 
+    const [pending, startTransition] = useTransition();
+    const onRefillHearts = ()=>{
+        if(pending || hearts === 5 || points<pointsToRefill)
+        {
+            return;
+        }
+        startTransition(()=>{
+
+        });
+    }   
     return(
         <ul className="w-full">
             <div className="flex items-center w-full p-4 gap-x-4 border-t-2">
@@ -27,7 +38,10 @@ export const Items = ({hearts,points,hasActiveSubscription}:Props)=>
                     </p>
                 </div>
                 <Button
-                    disabled={hearts===5 || points < pointsToRefill}
+                    onClick={onRefillHearts}
+                    disabled={hearts===5 || points < pointsToRefill
+                        || pending
+                    }
                 >
                     {hearts ===5 ? "full": (
                         <div className="flex items-center">
