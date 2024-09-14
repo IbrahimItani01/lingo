@@ -24,13 +24,15 @@ export const getUnits = cache(async ()=>{
     if(!userId || !userProgress?.activeCourseId){
         return [];
     }
-    // TODO: Confirm wether order is needed
     const data = await db.query.units.findMany({
+        orderBy:(units,{asc})=>[asc(units.order)],
         where: eq(units.courseId, userProgress.activeCourseId),
         with: {
             lessons: {
+                orderBy:(lessons,{asc})=>[asc(lessons.order)],
                 with:{
                     challenges: {
+                        orderBy:(challenges,{asc})=>[asc(challenges.order)],
                         with: {
                             challengeProgress:{
                                 where: eq(challengeProgress.userId, userId)
@@ -112,7 +114,6 @@ export const getCourseProgress = cache(async ()=>{
     const firstUncompletedLesson = unitsInActiveCourse
     .flatMap((unit)=> unit.lessons)
     .find((lesson)=>{
-        //TODO: if something does not work check the last if clause
         return lesson.challenges.some((challenge)=>{
             return !challenge.challengeProgress || challenge.challengeProgress.length === 0
              || challenge.challengeProgress.some((progress)=> progress.completed===false); 
@@ -154,7 +155,6 @@ export const getLesson = cache(async (id?:number)=>{
         return null;
     }
     const normalizeChallenges = data.challenges.map((challenge)=>{
-        //TODO: if something does not work check the last if clause
         const completed = challenge.challengeProgress
          && challenge.challengeProgress.length>0
          && challenge.challengeProgress.every((progress)=> progress.completed);
