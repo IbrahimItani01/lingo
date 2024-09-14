@@ -4,13 +4,10 @@ import db from "@/db/drizzle";
 import { getCourseById, getUserProgress, getUserSubscription } from "@/db/queries";
 import { challengeProgress, challenges, userProgress } from "@/db/schema";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { error } from "console";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
-const pointsToRefill = 10;
-
+import { pointsToRefill } from "@/constants";
 export const upsertUserProgress = async (courseId: number) =>{
     const {userId} = await auth();
     const user = await currentUser();

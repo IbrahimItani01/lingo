@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useTransition } from "react";
 import { toast } from "sonner";
-const pointsToRefill = 10;
+import { pointsToRefill } from "@/constants";
 type Props = {
     hearts: number;
     points: number;
