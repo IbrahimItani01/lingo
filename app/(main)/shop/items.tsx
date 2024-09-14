@@ -85,7 +85,7 @@ export const Items = ({hearts,points,hasActiveSubscription}:Props)=>
                     onClick={onUpgrade}
                         disabled={pending}
                     >
-                        {hasActiveSubscription? "settings":"upgrade"}
+                        {hasActiveSubscription? "active":"upgrade"}
                     </Button>
             </div>
         </ul>
