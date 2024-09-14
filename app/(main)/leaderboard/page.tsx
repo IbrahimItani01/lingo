@@ -1,20 +1,26 @@
 import { StickyWrapper } from "@/components/stickyWrapper";
-import { getUserProgress, getUserSubscription } from "@/db/queries";
+import { getTopTenUsers, getUserProgress, getUserSubscription } from "@/db/queries";
 import { redirect } from "next/navigation";
 import { UserProgress } from "@/components/userProgress";
 import { FeedWrapper } from "@/components/feedWrapper";
 import Image from "next/image";
-import { Items } from "./items";
+import { Separator } from "@/components/ui/separator";
+import { Avatar } from "@/components/ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 const LeaderboardPage= async ()=>{
     
     const userProgressData = getUserProgress();
     const userSubscriptionData = getUserSubscription();
+    const topTenUsersData = getTopTenUsers();
+     
     const [
         userProgress,
-        userSubscription
+        userSubscription,
+        topTenUsers,
     ] = await Promise.all([
         userProgressData,
-        userSubscriptionData
+        userSubscriptionData,
+        topTenUsersData
     ]);
 
     if(!userProgress || !userProgress.activeCourse){
@@ -43,7 +49,35 @@ const LeaderboardPage= async ()=>{
                     <p className="text-muted-foreground text-center text-lg mb-6">
                         See your rank among other users in Lingo's community
                     </p>
-                    {/* TODO: add use list */}
+                    <Separator
+                        className="mb-4 h-0.5 rounded-full"
+                    />
+                    {topTenUsers.map((userProgress,index)=>(
+                        <div 
+                            key={userProgress.userId}
+                            className="flex items-center w-full px-4 p-2 rounded-xl hove:bg-gray-200/50"
+                        >
+                            <p className="font-bold text-lime-700 mr-4">
+                                {index+1}
+                            </p>
+                            <Avatar className="border bg-green-500 h-12 w-12 ml-3 mr-6">
+                                <AvatarImage
+                                    src={userProgress.userImageSrc}
+                                    className="object-cover"
+                                />
+                            </Avatar>
+                            <p
+                                className="font-bold text-neutral-800 flex-1"
+                            >
+                                {userProgress.userName}
+                            </p>
+                            <p
+                                className="text-muted-foreground"
+                            >
+                                {userProgress.points} XP
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </FeedWrapper>
         </div>
