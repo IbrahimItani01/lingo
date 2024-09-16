@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { quests } from "@/constants";
+import { Progress } from "./ui/progress";
 type Props={
     points: number;
 }
@@ -17,6 +18,33 @@ export const Quests = ({points}:Props)=>{
                 </Button>
             </Link>
            </div>
+           <ul className="w-full space-y-4">
+                {
+                    quests.slice(0,2).map((quest)=>{
+                        const progress = (points/quest.value)*100;
+
+                        return(
+                            <div
+                                className="flex items-center w-full pb-4 gap-x-3 "
+                                key={quest.title}
+                            >
+                                <Image
+                                    src="/points.png"
+                                    alt="Points"
+                                    width={40}
+                                    height={40}
+                                />
+                                <div className="flex flex-col gap-y-2 w-full">
+                                    <p className="text-neutral-700 text-sm font-bold">
+                                        {quest.title}
+                                    </p>
+                                    <Progress value={progress} className="h-2" />
+                                </div>
+                            </div>
+                        );
+                    })
+                }
+           </ul>
         </div>
     );
 }
