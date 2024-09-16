@@ -1,5 +1,4 @@
 "use client";
-
 import { challengeOptions, challenges, userSubscription } from "@/db/schema";
 import { useState,useTransition } from "react";
 import { Header } from "./header";

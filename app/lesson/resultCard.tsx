@@ -1,6 +1,5 @@
-import { getUserSubscription } from "@/db/queries";
+"use client";
 import { cn } from "@/lib/utils";
-import { InfinityIcon } from "lucide-react";
 import Image from "next/image";
 
 type Props = {
@@ -10,7 +9,6 @@ type Props = {
 
 export const ResultCard =async ({value,variant}: Props)=>{
     const imageSrc = variant === "hearts"?"/heart.png":"/points.png"
-    const userSubscriptionData = await getUserSubscription();
     return (
         <div className={
             cn(
@@ -42,7 +40,7 @@ export const ResultCard =async ({value,variant}: Props)=>{
                     height={30}
                     className="mr-1.5"
                 />
-                {!!userSubscriptionData?.isActive ?<InfinityIcon className="h-6 w-6 stroke-[3] shrink-0"/>: value}
+                {value}
 
             </div>
         </div>
