@@ -6,24 +6,7 @@ import { FeedWrapper } from "@/components/feedWrapper";
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import { Promo } from "@/components/promo";
-const quests = [
-    {
-        title: "Earn 20 XP",
-        value: 20,
-    },
-    {
-        title: "Earn 50 XP",
-        value: 50,
-    },
-    {
-        title: "Earn 100 XP",
-        value: 100,
-    },
-    {
-        title: "Earn 250 XP",
-        value: 250,
-    },
-]
+import { quests } from "@/constants";
 
 const QuestsPage= async ()=>{
     
