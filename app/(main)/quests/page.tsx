@@ -4,6 +4,27 @@ import { redirect } from "next/navigation";
 import { UserProgress } from "@/components/userProgress";
 import { FeedWrapper } from "@/components/feedWrapper";
 import Image from "next/image";
+import { Progress } from "@/components/ui/progress";
+
+const quests = [
+    {
+        title: "Earn 20 XP",
+        value: 20,
+    },
+    {
+        title: "Earn 50 XP",
+        value: 50,
+    },
+    {
+        title: "Earn 100 XP",
+        value: 100,
+    },
+    {
+        title: "Earn 250 XP",
+        value: 250,
+    },
+]
+
 const QuestsPage= async ()=>{
     
     const userProgressData = getUserProgress();
@@ -43,7 +64,32 @@ const QuestsPage= async ()=>{
                     <p className="text-muted-foreground text-center text-lg mb-6">
                         Complete quests by earning points!
                     </p>
-                       {/*TODO: Add quests*/}
+                    <ul
+                        className="w-full"
+                    >
+                        {quests.map((quest)=>{
+                            const progress = (userProgress.points/quest.value)*100;
+                            return(
+                                <div
+                                    className="flex items-center w-full p-4 gap-x-4 border-t-2"
+                                    key={quest.title}
+                                >
+                                    <Image
+                                        src="/points.png"
+                                        alt="Points"
+                                        width={60}
+                                        height={60}
+                                    />
+                                    <div className="flex flex-col gap-y-2 w-full">
+                                        <p className="text-neutral-700 text-xl font-bold">
+                                            {quest.title}
+                                        </p>
+                                        <Progress value={progress} className="h-3" />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </ul>
                 </div>
             </FeedWrapper>
         </div>
