@@ -5,6 +5,7 @@ import { UserProgress } from "@/components/userProgress";
 import { FeedWrapper } from "@/components/feedWrapper";
 import Image from "next/image";
 import { Items } from "./items";
+import { Promo } from "@/components/promo";
 const ShopPage= async ()=>{
     
     const userProgressData = getUserProgress();
@@ -30,6 +31,8 @@ const ShopPage= async ()=>{
                     points={userProgress.points}
                     hasActiveSubscription={!!userSubscription?.isActive}
                 />
+                {!(!!userSubscription?.isActive) &&  <Promo/>}
+
             </StickyWrapper>
             <FeedWrapper>
                 <div className="w-full flex flex-col items-center">

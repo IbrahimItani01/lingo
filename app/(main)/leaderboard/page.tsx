@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { Promo } from "@/components/promo";
 const LeaderboardPage= async ()=>{
     
     const userProgressData = getUserProgress();
@@ -36,6 +37,8 @@ const LeaderboardPage= async ()=>{
                     points={userProgress.points}
                     hasActiveSubscription={!!userSubscription?.isActive}
                 />
+                {!(!!userSubscription?.isActive) &&  <Promo/>}
+
             </StickyWrapper>
             <FeedWrapper>
                 <div className="w-full flex flex-col items-center">
