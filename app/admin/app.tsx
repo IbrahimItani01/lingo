@@ -13,6 +13,7 @@ import { LessonList } from "./lesson/list";
 import { ChallengeList } from "./challenge/list";
 import { ChallengeCreate } from "./challenge/create";
 import { ChallengeEdit } from "./challenge/edit";
+import { ChallengeOptionList } from "./challengeOption/list";
 
 const dataProvider= simpleRestProvider("/api");
 const App=()=>{
@@ -45,6 +46,13 @@ const App=()=>{
             create={ChallengeCreate}
             edit= {ChallengeEdit}
             list={ChallengeList}
+        />
+         <Resource
+            name="challengeOptions"
+            recordRepresentation="title"
+            create={ChallengeCreate}
+            edit= {ChallengeEdit}
+            list={ChallengeOptionList}
         />
     </Admin>
     );
