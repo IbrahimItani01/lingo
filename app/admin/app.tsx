@@ -16,6 +16,13 @@ const App=()=>{
             edit= {CourseEdit}
             list={CourseList}
         />
+        <Resource
+            name="units"
+            recordRepresentation="title"
+            create={CourseCreate}
+            edit= {CourseEdit}
+            list={CourseList}
+        />
     </Admin>
     );
 };
