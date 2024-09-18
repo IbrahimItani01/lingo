@@ -1,8 +1,7 @@
 import db from "@/db/drizzle"
 import { courses } from "@/db/schema"
 import { isAdmin } from "@/lib/auth";
-import { eq, param } from "drizzle-orm"
-import { ArrowDownAZ } from "lucide-react";
+import { eq } from "drizzle-orm"
 import { NextResponse } from "next/server";
 
 export const GET = async (req: Request,{params}:{params:{courseId:number}})=>{
