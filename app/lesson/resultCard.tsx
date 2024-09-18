@@ -7,7 +7,7 @@ type Props = {
     value: number;
 };
 
-export const ResultCard =async ({value,variant}: Props)=>{
+export const ResultCard = ({value,variant}: Props)=>{
     const imageSrc = variant === "hearts"?"/heart.png":"/points.png"
     return (
         <div className={
