@@ -28,6 +28,7 @@ export const List = ({courses,activeCourseId}:Props)=>{
             {courses.map((course)=>(
                 <Card
                     key={course.id}
+                    // @ts-ignore
                     id={course.id}
                     title={course.title}
                     imageSrc={course.imageSrc}
