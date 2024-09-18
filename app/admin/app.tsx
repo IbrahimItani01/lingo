@@ -7,6 +7,9 @@ import { CourseEdit } from "./course/edit";
 import { UnitList } from "./unit/list";
 import { UnitCreate } from "./unit/create";
 import { UnitEdit } from "./unit/edit";
+import { LessonCreate } from "./lesson/create";
+import { LessonEdit } from "./lesson/edit";
+import { LessonList } from "./lesson/list";
 
 const dataProvider= simpleRestProvider("/api");
 const App=()=>{
@@ -25,6 +28,13 @@ const App=()=>{
             create={UnitCreate}
             edit= {UnitEdit}
             list={UnitList}
+        />
+         <Resource
+            name="lessons"
+            recordRepresentation="title"
+            create={LessonCreate}
+            edit= {LessonEdit}
+            list={LessonList}
         />
     </Admin>
     );
