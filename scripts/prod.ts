@@ -28,8 +28,6 @@ const main  = async ()=>{
             {title:"Spanish",imageSrc:"/es.png"},
             {title:"French",imageSrc:"/fr.png"},
             {title:"German",imageSrc:"/de.png"},
-            {title:"English",imageSrc:"/en.png"},
-            {title:"Italian",imageSrc:"/it.png"},
         ]).returning();
 
         // for each course, insert units
