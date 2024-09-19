@@ -178,21 +178,18 @@ const main  = async ()=>{
                                     challengeId: challenge.id,
                                     correct: false,
                                     text: "la mujer",
-                                    imageSrc: "/woman.png",
                                     audioSrc:"/es_woman.mp3",
                                 },
                                 {
                                     challengeId: challenge.id,
                                     correct: false,
                                     text: "el hombre",
-                                    imageSrc: "/man.png",
                                     audioSrc:"/es_man.mp3",
                                 },
                                 {
                                     challengeId: challenge.id,
                                     correct: true,
                                     text: "el chico",
-                                    imageSrc: "/boy.png",
                                     audioSrc:"/es_boy.mp3",
                                 },
                             ]);
